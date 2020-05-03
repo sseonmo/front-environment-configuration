@@ -9,7 +9,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
     mode: 'development',
     entry: {
-        main: './src/app.js',
+        main: './app.js',
     },
     output: {
         filename: '[name].js',
@@ -35,6 +35,11 @@ module.exports = {
                     name: '[name].[ext]?[hash]', // 파일명 지정
                     limit: 18000, // url-loader 일때 사용가능
                 },
+            },
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: /node_module/,
             },
         ],
     },
