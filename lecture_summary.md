@@ -186,8 +186,8 @@ module.exports = {
     > 2. 변환(Transforming) / 추상 구문 트리를 변경한다.
     > 3. 출력(Printing) / 변경된 출력물을 출력한다.
 -   바벨의 코어는 파싱과 출력만 당당하고 변환작업은 플러그인이 처리한다.
--   여려개의 플러그인을 모아놓은 세트를 프리셋이라고 하는데 ECNAScript+ 환경은 env 프리셋을 사용한다.
--   바벨이 변화하지 못하는 코드는 폴리필이라고 부르는 코드조각을 불러와 결과무에 로딩해서 해결한다.
+-   여러개의 플러그인을 모아놓은 세트를 프리셋이라고 하는데 ECNAScript+ 환경은 env 프리셋을 사용한다.
+-   바벨이 변환하지 못하는 코드는 폴리필이라고 부르는 코드조각을 불러와 결과물에 로딩해서 해결한다.
 
 ```js
 // babel.config.js - babel 설정파일
@@ -201,9 +201,9 @@ module.exports = {
                     chrome: '79',
                     ie: '11',
                 },
-                useBuiltIns: 'usage', //entry
+                useBuiltIns: 'usage', //entry // 폴리필을 사용하겠다는 의미(usage, entry) / default : false
                 corejs: {
-                    version: 2, // 3
+                    version: 2, // 3    // core-js  2버전을 사용하겠다는 의미
                 },
             },
         ],
@@ -212,6 +212,7 @@ module.exports = {
 
 // webpack.config.js
 // npm i babel-loader
+// loader를 babel-loader 로 설정한다. 기본적으로 babel 설정 파일이 있는지 없는지 먼저 찾는다.
 module.exports = {
     module: {
         rules: [
@@ -225,7 +226,55 @@ module.exports = {
 };
 ```
 
-###
+#### [sass-loader](https://github.com/webpack-contrib/sass-loader)
+
+-   .sass, scss를 css로 파싱하는 loader
+
+```js
+// webpack.config.js
+module.exports = {
+    module: {
+        rules: [
+            {
+                test: /\.s[ac]ss$/i,
+                use: [
+                    // Creates `style` nodes from JS strings
+                    'style-loader',
+                    // Translates CSS into CommonJS
+                    'css-loader',
+                    // Compiles Sass to CSS
+                    'sass-loader',
+                ],
+            },
+        ],
+    },
+};
+```
+
+### [esLint](https://eslint.org/)
+
+-   설치 : `npm install eslint`
+-   ESLint는 ECMAScript 코드에서 문제점을 검사하고 일부는 더 나은 코드로 정장하는 린트 도구 중 하나이다.
+-   코드의 가독성을 높이고 잠재적인 오류와 버그를 제거해 단단한 코드를 만드는 것이 목적이다.
+-   코드에서 검사하는 항목은 크게 두가지 분류된다.
+    -   포맷팅 / 일관된 코드 스타일을 유지하도록해 코드 가독성을 높여준다.(들여쓰기 규칙, 코드 라인의 최대 너비 규칙)
+    -   코드품질 / 어플리케이션의 잠재적(potential)인 오류나 버그를 예방하기 위함이다.
+-   보통은 직접생성하는 방식이 아닌 초기화명령어를 통해 생성한다. `npx eslint --init`명령어를 실행하면 대화식 명령어로 진행되며 자신의 프로젝트에 맞게 답하면 된다. 답변에 따라 .eslintrc.js 설정파일을 생성한다.
+
+    ```js
+     npx eslint --init
+
+    ? How would you like to use ESLint?
+    ? What type of modules does your project use?
+    ? Which framework does your project use?
+    ? Does your project use TypeScript?
+    ? Where does your code run?
+    ? What format do you want your config file to be in?
+    ? Would you like to install them now with npm?
+
+    ```
+
+-   eslint 실행시 `--fix` 해당 옵션을 주면 수정가능한 것들은 자동수정된다.([규칙목록중 왼쪽에 렌치표시가 있는것](https://eslint.org/docs/rules/))
 
 ## 그외
 
