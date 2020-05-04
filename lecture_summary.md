@@ -1,6 +1,6 @@
 참조(김정환님 블로그) - https://jeonghwan-kim.github.io/series/2019/12/10/frontend-dev-env-webpack-basic.html
 
-## 자주사용하는 loader
+### 자주사용하는 loader
 
 #### css-loader
 
@@ -177,6 +177,55 @@ module.exports = {
     ],
 };
 ```
+
+## [Babel](https://babeljs.io/)
+
+-   바벨은 일관적인 방식으로 코딩하면서, 다양한 브라우저에서 동작될 수 있게 어플리케이션을 만들기 위한 도구 이다.
+-   3 단계로 빌드한다.
+    > 1. 파싱(Parsing) / 코드를 읽고 추상 구문 트리(AST)로 변환한다.
+    > 2. 변환(Transforming) / 추상 구문 트리를 변경한다.
+    > 3. 출력(Printing) / 변경된 출력물을 출력한다.
+-   바벨의 코어는 파싱과 출력만 당당하고 변환작업은 플러그인이 처리한다.
+-   여려개의 플러그인을 모아놓은 세트를 프리셋이라고 하는데 ECNAScript+ 환경은 env 프리셋을 사용한다.
+-   바벨이 변화하지 못하는 코드는 폴리필이라고 부르는 코드조각을 불러와 결과무에 로딩해서 해결한다.
+
+```js
+// babel.config.js - babel 설정파일
+// npm i @babel/core @babel/cli @babel/preset-env core-js@2
+module.exports = {
+    presets: [
+        [
+            '@babel/preset-env',
+            {
+                targets: {
+                    chrome: '79',
+                    ie: '11',
+                },
+                useBuiltIns: 'usage', //entry
+                corejs: {
+                    version: 2, // 3
+                },
+            },
+        ],
+    ],
+};
+
+// webpack.config.js
+// npm i babel-loader
+module.exports = {
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: /node_module/,
+            },
+        ],
+    },
+};
+```
+
+###
 
 ## 그외
 
