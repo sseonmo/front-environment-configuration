@@ -273,6 +273,27 @@ module.exports = {
     ? Would you like to install them now with npm?
 
     ```
+    ```js
+    // .eslintrc.js 
+    module.exports = {
+        "env": {
+            "browser": true,
+            "es6": true
+        },
+        "extends": ["eslint:recommended"],  // 미리 설정된 규칙 세트을 사용한다
+        "globals": {
+            "Atomics": "readonly",
+            "SharedArrayBuffer": "readonly"
+        },
+        "parserOptions": {
+            "ecmaVersion": 2018,
+            "sourceType": "module"
+        },
+        "rules": {
+        }
+    };
+    ```
+
 
 -   eslint 실행시 `--fix` 해당 옵션을 주면 수정가능한 것들은 자동수정된다.([규칙목록중 왼쪽에 렌치표시가 있는것](https://eslint.org/docs/rules/))
 
