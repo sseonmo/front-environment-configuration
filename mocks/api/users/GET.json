@@ -8,11 +8,11 @@
         "name": "scott"
     },
     {
-        "id": "3",
+        "id": 3,
         "name": "mike"
     },
     {
-        "id": "4",
+        "id": 4,
         "name": "chris"
     }
 ]
